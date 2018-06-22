@@ -1,8 +1,7 @@
 import React, {
 	Component
 } from 'react';
-import MessageList from "./MessageList.jsx";
-import Message from "./Message.jsx";
+
 class ChatBar extends Component {
 	 constructor(props) {
     super(props);

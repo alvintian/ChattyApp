@@ -3,10 +3,7 @@ import React, {
 } from 'react';
 import MessageList from "./MessageList.jsx";
 import ChatBar from "./ChatBar.jsx";
-import Message from "./Message.jsx";
-import {
-	render
-} from "react-dom";
+
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -100,7 +97,6 @@ class App extends Component {
 			message.username = this.state.currentUser.name;
 //			this.setState({messages: message.content})
 		}
-		console.log(message,"what'sin message");
 		this.socket.send(JSON.stringify(message));
 	}
 		

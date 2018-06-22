@@ -1,9 +1,7 @@
 import React, {
   Component
 } from 'react';
-import ReactDOM from "react-dom";
 import Message from "./Message.jsx";
-import ChatBar from "./ChatBar.jsx";
 
 
 class MessageList extends Component {
