@@ -14,10 +14,12 @@ class App extends Component {
 		this.state = {
 			totalUsers:0,
 			currentUser: {
-				name: "Bob"
-			}, // optional. if currentUser is not defined, it means the user is Anonymous
+				name: "Bob",
+				newname: "Bob"
+				}, // optional. if currentUser is not defined, it means the user is Anonymous
 			messages: []
 		};
+	   this.handleNameChange = this.handleNameChange.bind(this);
 	}
 
 	// Called after the component was rendered and it was attached to the
@@ -41,18 +43,18 @@ class App extends Component {
       break;
       case "incomingNotification":
 	        // handle incoming notification
-		 responseMessage.content= this.state.currentUser.name+" has changed their name to "+responseMessage.username;
+		 responseMessage.content= responseMessage.oldname+" has changed their name to "+responseMessage.username;
         break;
       default:
         // show an error in the console if the message type is unknown
         throw new Error("Unknown event type " + responseMessage.type);
-}
+			}
 			const messages = this.state.messages.concat(responseMessage);
 				// this.setState(state => ({
 				//   messages: [event.data, ...state.messages]
 				// }));
 			this.setState({
-				currentUser: {name:responseMessage.username},
+//				currentUser: {name:responseMessage.username},
 				messages: messages
 			})
 
@@ -65,23 +67,49 @@ class App extends Component {
 		//   this.setState({messages: messages})
 		// }, 1000);
 	}
+  handleNameChange(event) {
+    this.setState({
+    	currentUser: {
+    		newname: event.target.value,
+    		name: this.state.currentUser.name
+    	}
+    });
+  		console.log(this.state.currentUser);
+  }
+
 	totalUsers=x=>{this.setState({totalUsers:x})};
+
 	handleMessageSubmit = content => {
-		console.log(content, "on submit sent");
-		if(this.state.currentUser.name!==content.username){
-		content.type="postNotification";
-		}else{
-		content.type="postMessage";
+		let message = {
+			content: content
 		}
-//		this.state.currentUser.name=content.username;
-		this.socket.send(JSON.stringify(content));
+		if(this.state.currentUser.name !== this.state.currentUser.newname){
+			message.type="postNotification";
+			message.username = this.state.currentUser.newname;
+			message.oldname=this.state.currentUser.name;
+
+			this.setState({
+				currentUser: {
+					name: this.state.currentUser.newname,
+					newname: this.state.currentUser.newname
+				}
+			})
+		} else{
+			message.type="postMessage";
+			message.username = this.state.currentUser.name;
+		}
+		this.socket.send(JSON.stringify(message));
 	}
-		render() {
+		
+
+	render() {
 		return (
-		<div><nav className="navbar"><a href="/" className="navbar-brand">Chatty</a>
-		<div className="totalUser">{this.state.totalUsers} Users Online</div></nav>
-		<MessageList message={this.state.messages}/>
-		<ChatBar user={this.state.currentUser.name} onMessageSubmit={this.handleMessageSubmit}/></div>
-		);}
+			<div><nav className="navbar"><a href="/" className="navbar-brand">Chatty</a>
+			<div className="totalUser">{this.state.totalUsers} Users Online</div></nav>
+			<MessageList message={this.state.messages}/>
+
+			<ChatBar NameChange={this.handleNameChange} user={this.state.currentUser.newname} onMessageSubmit={this.handleMessageSubmit}/></div>
+		);
+	}
 }
 export default App;
