@@ -28,7 +28,7 @@ class ChatBar extends Component {
   onKeyUp={this.handleEnterPressed}/>
   <input className="chatbar-message" value={this.state.content} onChange={this.handleChange} 
   onKeyUp={this.handleEnterPressed} placeholder="Type a message and hit ENTER"/>
-</footer>)
+  </footer>)
 	}
 }
 

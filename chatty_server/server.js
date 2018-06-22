@@ -17,13 +17,13 @@ const server = express()
 const wss = new SocketServer({
   server
 });
-wss.broadcast = function broadcast(data) {
-  // wss.clients.forEach(function each(client) {
-  //   if (client.readyState === WebSocket.OPEN) {
-  //     client.send(data);
-  //   }
-  // });
-};
+// wss.broadcast = function broadcast(data) {
+//   // wss.clients.forEach(function each(client) {
+//   //   if (client.readyState === WebSocket.OPEN) {
+//   //     client.send(data);
+//   //   }
+//   // });
+// };
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by

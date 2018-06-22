@@ -27,9 +27,6 @@ class App extends Component {
 	// in App.jsx
 	componentDidMount() {
 		this.socket = new WebSocket("ws://localhost:3001/");
-		// this.socket.onmessage=function(event){
-		// 	console.log(JSON.parse(event.data),"test");
-		// }
 		this.socket.addEventListener("message", event => {
 			const responseMessage = JSON.parse(event.data);
 		if(typeof(responseMessage)==='number'){
@@ -49,9 +46,6 @@ class App extends Component {
         throw new Error("Unknown event type " + responseMessage.type);
 			}
 			const messages = this.state.messages.concat(responseMessage);
-				// this.setState(state => ({
-				//   messages: [event.data, ...state.messages]
-				// }));
 			this.setState({messages: messages})
 
 		});
@@ -95,7 +89,6 @@ class App extends Component {
 		} else{
 			message.type="postMessage";
 			message.username = this.state.currentUser.name;
-//			this.setState({messages: message.content})
 		}
 		this.socket.send(JSON.stringify(message));
 	}
@@ -105,7 +98,6 @@ class App extends Component {
 			<div><nav className="navbar"><a href="/" className="navbar-brand">Chatty</a>
 			<div className="totalUser">{this.state.totalUsers} Users Online</div></nav>
 			<MessageList message={this.state.messages}/>
-
 			<ChatBar NameChange={this.handleNameChange} user={this.state.currentUser.newname} onMessageSubmit={this.handleMessageSubmit}/></div>
 		);
 	}
