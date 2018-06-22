@@ -21,13 +21,15 @@ class ChatBar extends Component {
     event.preventDefault();
     if (event.key === "Enter") {
   	this.props.onMessageSubmit(this.state.content);
+    console.log("is this bugged??");
   	this.setState({content:""});
     }
   }
 //defaultValue={this.props.user}
 	render() {
 	return (<footer className="chatbar">
-  <input className="chatbar-username"  onChange={this.props.NameChange} value={this.props.user} placeholder="Your Name (Optional)" />
+  <input className="chatbar-username"  onChange={this.props.NameChange} value={this.props.user} placeholder="Your Name (Optional)" 
+  onKeyUp={this.handleEnterPressed}/>
   <input className="chatbar-message" value={this.state.content} onChange={this.handleChange} 
   onKeyUp={this.handleEnterPressed} placeholder="Type a message and hit ENTER"/>
 </footer>)

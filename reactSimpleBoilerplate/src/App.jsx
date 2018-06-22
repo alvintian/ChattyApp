@@ -21,7 +21,6 @@ class App extends Component {
 		};
 	   this.handleNameChange = this.handleNameChange.bind(this);
 	}
-
 	// Called after the component was rendered and it was attached to the
 	// DOM. This is a good place to make AJAX requests or setTimeout.
 	// in App.jsx
@@ -34,7 +33,7 @@ class App extends Component {
 		this.socket.addEventListener("message", event => {
 			const responseMessage = JSON.parse(event.data);
 		if(typeof(responseMessage)==='number'){
-			console.log(responseMessage,"this is a numb");
+			console.log(responseMessage,"total users is a numb");
 		return 	this.totalUsers(responseMessage);	
 		}
 		  switch(responseMessage.type) {
@@ -53,10 +52,7 @@ class App extends Component {
 				// this.setState(state => ({
 				//   messages: [event.data, ...state.messages]
 				// }));
-			this.setState({
-//				currentUser: {name:responseMessage.username},
-				messages: messages
-			})
+			this.setState({messages: messages})
 
 		});
 		// setTimeout(() => {
@@ -74,7 +70,6 @@ class App extends Component {
     		name: this.state.currentUser.name
     	}
     });
-  		console.log(this.state.currentUser);
   }
 
 	totalUsers=x=>{this.setState({totalUsers:x})};
@@ -97,11 +92,11 @@ class App extends Component {
 		} else{
 			message.type="postMessage";
 			message.username = this.state.currentUser.name;
+//			this.setState({messages: message.content})
 		}
 		this.socket.send(JSON.stringify(message));
 	}
 		
-
 	render() {
 		return (
 			<div><nav className="navbar"><a href="/" className="navbar-brand">Chatty</a>
