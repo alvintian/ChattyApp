@@ -8,13 +8,12 @@ import ChatBar from "./ChatBar.jsx";
 class Message extends Component {
   render() {
   let message =this.props.ListMessage;
-    // const style = { color: this.props.color };
-    // return <h1 style={style}>{this.props.children}</h1>;
+  console.log(message);
     if(message.type==="incomingNotification") {
   return <div className="message system">{message.content}</div>
 }else{
   return <div className="message"><span className="message-username">{message.username}</span>
-  <span className="message-content">{message.content}</span></div>;
+  <span style={{color: message.nameColor}} className="message-content">{message.content}</span></div>;
 }
   }
 }

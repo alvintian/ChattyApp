@@ -11,21 +11,24 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		// this is the *only* time you should assign directly to state:
+	  let rand =['blue','red','green','brown'];
+		let color = rand[Math.floor(Math.random()*rand.length)];
 		this.state = {
 			totalUsers:0,
 			currentUser: {
 				name: "Bob",
-				newname: "Bob"
+				newname: "Bob",
+				color:color
 				}, // optional. if currentUser is not defined, it means the user is Anonymous
 			messages: []
 		};
 	   this.handleNameChange = this.handleNameChange.bind(this);
 	}
+
 	// Called after the component was rendered and it was attached to the
 	// DOM. This is a good place to make AJAX requests or setTimeout.
 	// in App.jsx
 	componentDidMount() {
-
 		this.socket = new WebSocket("ws://localhost:3001/");
 		// this.socket.onmessage=function(event){
 		// 	console.log(JSON.parse(event.data),"test");
@@ -67,7 +70,8 @@ class App extends Component {
     this.setState({
     	currentUser: {
     		newname: event.target.value,
-    		name: this.state.currentUser.name
+    		name: this.state.currentUser.name,
+			  color: this.state.currentUser.color
     	}
     });
   }
@@ -76,17 +80,19 @@ class App extends Component {
 
 	handleMessageSubmit = content => {
 		let message = {
-			content: content
+			content: content,
+		  nameColor: this.state.currentUser.color
 		}
+
 		if(this.state.currentUser.name !== this.state.currentUser.newname){
 			message.type="postNotification";
 			message.username = this.state.currentUser.newname;
 			message.oldname=this.state.currentUser.name;
-
 			this.setState({
 				currentUser: {
 					name: this.state.currentUser.newname,
-					newname: this.state.currentUser.newname
+					newname: this.state.currentUser.newname,
+				  color: this.state.currentUser.color
 				}
 			})
 		} else{
@@ -94,6 +100,7 @@ class App extends Component {
 			message.username = this.state.currentUser.name;
 //			this.setState({messages: message.content})
 		}
+		console.log(message,"what'sin message");
 		this.socket.send(JSON.stringify(message));
 	}
 		

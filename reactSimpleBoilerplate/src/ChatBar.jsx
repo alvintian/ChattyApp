@@ -10,7 +10,6 @@ class ChatBar extends Component {
   		content: ''
     };
     this.handleChange = this.handleChange.bind(this);
-
   }
 
   handleChange(event) {
@@ -21,11 +20,9 @@ class ChatBar extends Component {
     event.preventDefault();
     if (event.key === "Enter") {
   	this.props.onMessageSubmit(this.state.content);
-    console.log("is this bugged??");
   	this.setState({content:""});
     }
   }
-//defaultValue={this.props.user}
 	render() {
 	return (<footer className="chatbar">
   <input className="chatbar-username"  onChange={this.props.NameChange} value={this.props.user} placeholder="Your Name (Optional)" 
