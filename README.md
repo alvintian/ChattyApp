@@ -15,6 +15,9 @@ then open a new terminal, and in the same folder,
 	npm start
 	open http://localhost:3000
 
+##Screenshot
+<br />
+![](screenshot/one.png)
 
 ## Dependencies
 React
